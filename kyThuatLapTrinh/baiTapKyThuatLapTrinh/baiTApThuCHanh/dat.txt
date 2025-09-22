@@ -1,0 +1,9 @@
+MSSV: 342
+Ho Ten: do duc
+Diem: 7.00
+MSSV: 213
+Ho Ten: so do
+Diem: 8.00
+MSSV: 123
+Ho Ten: ao nhay
+Diem: 8.70

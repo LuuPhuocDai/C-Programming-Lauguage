@@ -1,0 +1,242 @@
+#include "stdio.h"
+#include "math.h"
+
+
+// ham tong
+double hamTong(int a[], int n){
+	double tong = 0;
+	for(int i = 0; i < n; i++){
+		tong += (double)a[i];
+	}
+	return tong;
+}
+
+// ham tinh tbn
+double hamTinhTbn(int a[], int n){
+	double logsum = 0;
+	int dem = 0;
+	for(int i = 0; i < n; i++){
+		if(a[i] > 0){
+			logsum += log(a[i]);
+			dem++;
+		}
+	}
+	if(dem == 0){
+		printf("\nkhong tinh trung binh nhan do trong mang co phan <= 0");
+		return 0;
+	}
+	else{
+	    double tbn = exp(logsum / dem);
+		printf("\ntrung binh nhan trong mang la: %.2f", tbn);
+		return tbn;
+	}
+
+}
+//ham tim cac phan tu duong va in ra tong cua chung
+int timDuong(int a[], int n){
+	int dem1 = 0;
+	for(int i = 0; i < n;i++){ 
+		if(a[i] > 0){
+			dem1++;
+		}
+    }
+return dem1;
+}
+int timDuong1(int a[], int n){
+	int s2 = 0;
+	for(int i = 0; i < n;i++){ 
+	    if(a[i] > 0){
+		    s2 += a[i];
+	    }
+    }
+return s2;
+}
+   
+// ham tim duong nho nhat trong mang
+int hamTimDuongNn(int a[], int n){
+	int min2 = 0;// gia trj duong nho nhat
+	for(int i = 0; i < n;i++){// tim phan tu duong dau tien de so sanh lay gia tri nho nhat
+		if(a[i] > 0){
+			min2 = i;
+			break;
+		}
+	}
+	for(int i = 0; i < n; i++){
+		if(a[i] > 0 && a[min2] > a[i]){
+			min2 = i;
+		}
+	}
+	return min2;// de luu gia tri min2
+}
+
+// ham max va min
+int hamMax(int a[], int n){
+	int max;
+    max = a[0];
+	for(int i = 1; i < n; i++){
+		if(max < a[i]){
+			max = a[i];
+		}
+	}
+	return max;// de luu gia tri max
+}
+int hamMin(int a[], int n){
+	int min;
+	min = a[0];
+	for(int i = 1; i < n; i++){
+		if(min > a[i]){
+			min = a[i];
+		}
+	}
+	return min;// de luu gia tri min
+}
+
+// ham nhap 
+void hamNhapCacPhanTu(int a[], int n){
+	for(int i = 0; i < n; i++){
+		printf("A[%d] = ", i);
+		scanf("%d", &a[i]);
+	}
+}
+
+// ham in
+void hamIn(int a[], int n){
+	for(int i = 0; i < n; i++){
+		printf("%d ", a[i]);
+		if((i + 1) % 10 == 0){
+			printf("\n");
+		}
+	}
+}
+
+// ham tim so nt trong mang
+int ktSoNT(int m){
+	int i;
+	if (m < 2) return 0;
+	for(i = 2; i <= sqrt(m); i++){
+		if(m % i == 0){
+			return 0;// khong phai la so nguyen to
+		}
+	}
+		return 1;// la so nguyen to
+}
+
+// ham sap xep cac phan tu trong mang tang dan
+void SapXepTangDan(int a[], int n){// thuat toan bubble sort( bot noi)
+	int i, j;
+	int hVi ;
+	for(i = 0; i < n - 1; i++){
+		for(j = 0; j < n-1-i; j++){
+			if(a[j] > a[j + 1]){
+				hVi = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = hVi;
+			}
+		}
+	}
+}
+
+// ham sap xep cac phan tu trong mang giam dan 
+void sapXepGiamDan(int a[], int n){
+	int hVi;
+	for(int i = 0; i < n - 1; i++){
+		for(int j = 0; j < n-1-i; j++){
+			if(a[j] < a[j + 1]){
+				hVi = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = hVi;
+			}
+		}
+	}
+}
+
+
+// chuong trinh chinh
+int main(){
+	int a[101], i, n;
+	
+	// ktr 
+	do{
+		printf("nhap so phan tu trong n: ");
+		scanf("%d", &n);
+	}while(n <= 0 || n > 101);
+	
+	// nhap
+    hamNhapCacPhanTu(a, n);
+    
+    // in cac phan tu
+	printf("\ncac phan vua nhap vao trong mang la:\n");
+	hamIn(a, n);
+	printf("\n=======================================================================\n");
+	// gia tri nho nhat lon nhat cua mang
+	int max = hamMax(a, n);
+	printf("\ngia tri lon nhat la: %d",max);
+	int min = hamMin(a, n);
+	printf("\ngia tri nho nhat la: %d",min);
+	printf("\n=======================================================================\n");
+	// tim va in phan tu  duong nho nhat
+	int min2 = hamTimDuongNn(a, n);
+	printf("\ngia tri duong nho nhat la %d va o vi tri A[%d]",a[min2], min2);
+	printf("\n=======================================================================\n");
+	// tong cua mang va tong tb va tong tb nhan
+	double tbn = 1;
+	double tbc = 0;
+	double tong = hamTong(a, n);
+	tbc = tong / n;
+    printf("\ntong cac phan tu trong mang la: %.2f", tong );
+	printf("\ntrung binh tong trong trong mang la: %.2f", tbc);
+    hamTinhTbn(a, n);
+	printf("\n=======================================================================\n");
+	// tim phan tu x trong mang
+	int x, d = 0 ;// d o day dong vai tro tim x
+	printf("\nnhap x: ");
+	scanf("%d", &x);
+	for(i = 0; i < n; i++){
+		if(x == a[i]){
+			d = 1;
+			break;
+		}
+	}
+	if(d){
+		printf("\ntrong mang co phan tu bang x bang %d", x);
+	}
+	else{
+		printf("\nmang khong co phan tu x nao bang %d", x);
+	}
+	printf("\n=======================================================================\n");
+	// sap xep mang the thu tu tang dan va giam dan
+    SapXepTangDan(a, n);
+    printf("\ncac phan tu dc sap xep tang dan trong mang:\n");
+    hamIn(a, n);
+	printf("\n=======================================================================\n");
+	// sap xep mang the thu tu giam dan
+	sapXepGiamDan(a, n);
+    printf("\ncac phan tu dc sap xep giam dan trong mang:\n");
+    hamIn(a, n);
+	printf("\n=======================================================================\n");
+	// ktr so nguyen to
+	int dem = 0;
+	for(i = 0; i < n; i++){
+		if(ktSoNT(a[i]) == 1){
+			dem++;
+		}
+	}
+	printf("\nmang co %d so nguyen to", dem);
+	printf("\nbao gom nhung so: ");
+	for(i = 0; i< n; i++){
+		if(ktSoNT(a[i]) == 1){
+			printf("%d ", a[i]);
+		}
+	}
+	printf("\n=======================================================================\n");
+	// tim so nguyen duong trong mang
+	int dem1 = 0;
+	int s2 = 0;
+	s2 = timDuong1(a, n);
+	dem1 = timDuong(a, n);
+	printf("\nco %d so nguyen duong trong mang", dem1);
+	printf(" va tong cua no bang: %d", s2);
+	printf("\n=======================================================================\n");
+
+
+}
